@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div>
+        <a href="{% url 'opinion:add_one' %}">增加</a>
+    </div>
+    {% for p in opins %}
+        <li>
+            {% if p.opinion_photo %}
+                <img style="width:200px;height:200px;" src="{{ p.opinion_photo.url }}">
+            {% endif %}
+            {{ p.opinion_text }}
+            <a href="{% url 'opinion:detail' p.id%}">详情</a>
+        </li>
+    {% endfor %}
+
+
+{% endblock %}

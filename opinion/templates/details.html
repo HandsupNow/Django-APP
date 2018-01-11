@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="unit-1-2 unit-1-on-mobile">
+        <h3>详细信息</h3>
+        {% if opinion_obj.opinion_photo %}
+            <img src="{{ opinion_obj.opinion_photo.url }}"><hr>
+        {% endif %}
+        <b class="float-left">意见：{{ opinion_obj.opinion_text }}</b>
+        <hr>
+        {% for a in answers %}
+            <b class="float-left">时间：{{ a.created|timesince }}前</b>
+            <hr>
+            <b class="float-left">回复：{{ a.answer_text }}</b>
+            <hr>
+            {% if a.answer_photo %}
+                <img src="{{ a.answer_photo.url }}"><hr>
+            {% endif %}
+        {% endfor %}
+        <a class="cws_button" href="{% url 'opinion:index' %}">
+            Back
+        </a>
+    </div>
+    <div class="unit-1-2 unit-1-on-mobile">
+        <form class="form" action="" method="post" enctype="multipart/form-data">
+             {% csrf_token %}
+             {% for field in form %}
+                 {{ field.label_tag }}
+                 {{ field }}
+                 {% if field.help_text %}
+                    <p class="help text-small text-muted">{{ field.help_text|safe }}</p>
+                 {% endif %}
+                 <hr>
+             {% endfor %}
+             <input type="submit" value="提交">
+        </form>
+    </div>
+
+{% endblock %}
